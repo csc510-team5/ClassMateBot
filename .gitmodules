@@ -1,0 +1,3 @@
+[submodule "Plagiarism-Checker"]
+	path = Plagiarism-Checker
+	url = ./Plagiarism-Checker/
