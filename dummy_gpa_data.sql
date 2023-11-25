@@ -6,6 +6,10 @@ VALUES
     ('D', 1),
     ('F', 0);
 
+INSERT INTO name_mapping
+VALUES
+    ('1143956280222957578', 'cornonjacob', 'Jacob Gerlach');
+
 INSERT INTO previous_course_grades
 VALUES
     ('cornonjacob', 'CSC510', 'A'),
