@@ -259,8 +259,8 @@ class Grades(commands.Cog):
         try:
             curr_grade = get_grade_for_class(ctx.author.name, ctx.guild.id)
             
-            curr_letter_grade = db.query(
-                f'''SELECT grade_point
+            curr_grade_point, curr_letter = db.query(
+                f'''SELECT grade_point, grade_letter
                 FROM (
                     SELECT grade_letter
                     FROM grade_bounds
@@ -268,7 +268,7 @@ class Grades(commands.Cog):
                 ) AS curr_grade_letter
                 JOIN letter_grades
                 ON letter = grade_letter'''
-            )[0][0]
+            )[0]
             
             previous_gpa = db.query(
                 '''SELECT AVG(grade_point)
@@ -296,13 +296,14 @@ class Grades(commands.Cog):
 
                     UNION ALL
 
-                    SELECT {curr_letter_grade} AS grade_point
+                    SELECT {curr_grade_point} AS grade_point
                 ) AS all_grades''',
             (ctx.author.name,))[0][0]
             
             await ctx.author.send(
                 f'Current grade for class: {curr_grade:.2f}\n' +
-                f'Current letter grade for class: {curr_letter_grade}\n' +
+                f'Current letter grade for class: {curr_letter}\n' +
+                f'Current grade point for class: {curr_grade_point}\n' +
                 f'Previous GPA: {previous_gpa:.2f}\n' + 
                 f'Forcasted GPA: {forcasted_gpa:.2f}'
             )
