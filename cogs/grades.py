@@ -21,6 +21,8 @@ def get_grade_for_class(member_name: str, guild_id: str) -> int:
     )
     
     class_total = 0
+    weight_total = 0
+    no_grades = True
     
     for category_name, category_weight in categories:
         grades = db.query(
@@ -34,10 +36,12 @@ def get_grade_for_class(member_name: str, guild_id: str) -> int:
         )
 
         if not grades:
-            raise RuntimeError(f"Grades for {category_name} do not exist")
+            continue
 
         if not points:
-            raise RuntimeError(f"Assignments for {category_name} do not exist")
+            continue
+        
+        no_grades = False
 
         actual_grades = [x[0] for x in grades]
         actual_points = [x[0] for x in points]
@@ -52,8 +56,12 @@ def get_grade_for_class(member_name: str, guild_id: str) -> int:
         average = (total / points_total) * 100
 
         class_total += (average * float(category_weight))
-        
-    return class_total
+        weight_total += float(category_weight)
+    
+    if no_grades:
+        raise ValueError(f"No assignments are graded")
+    
+    return class_total/weight_total  # corrrect for grades that are not yet inputted (null)
 
 
 class Grades(commands.Cog):
@@ -241,7 +249,7 @@ class Grades(commands.Cog):
         """Lets a student get their overall average grade for the class"""
         try:
             await ctx.author.send(f"Grade for class: {get_grade_for_class(ctx.author.name, ctx.guild.id):.2f}%")
-        except RuntimeError as e:
+        except ValueError as e:
             await ctx.author.send(str(e))
             
     @commands.command(
