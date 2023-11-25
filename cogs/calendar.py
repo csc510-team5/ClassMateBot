@@ -112,6 +112,28 @@ class Calendar(commands.Cog):
 
         except HttpError as error:
             print(f"An error occurred: {error}")
+            
+    @commands.command(
+        name="add_lectures"
+    )   
+    async def add_lectures(self, ctx, class_name, address, event_time, end_year, end_month, end_day):
+        creds = self.credsSetUp()
+        try:
+            calendar = os.getenv("CALENDAR_ID")
+            service = build("calendar", "v3", credentials=creds)
+            event = {
+                "summary": f'{class_name} lecture',
+                "description": f'Address: {address}',
+                "colorId": 2,
+                "start": {"dateTime": str(event_time), "timeZone": "UTC"},
+                "end": {"dateTime": str(event_time), "timeZone": "UTC"},
+                'recurrence': [f'RRULE:FREQ=WEEKLY;UNTIL={end_year}{end_month}{end_day}']
+            }
+            event = service.events().insert(calendarId=calendar, body=event).execute()
+            await ctx.send(f"Lecture for {class_name} added to calendar!")
+
+        except HttpError as error:
+            print(f"An error occurred: {error}")
 
     # -----------------------------------------------------------------------------------------------------------------
     #    Function: clearCalendar(self, ctx)
