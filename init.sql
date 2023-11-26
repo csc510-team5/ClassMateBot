@@ -78,3 +78,9 @@ CREATE TABLE answers (
     author_id       BIGINT,
     author_role     VARCHAR NOT NULL
 );
+
+CREATE TABLE group_settings (
+    guild_id        BIGINT NOT NULL,
+    total_groups    INT NOT NULL,
+    max_members     INT NOT NULL
+)

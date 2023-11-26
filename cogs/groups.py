@@ -63,6 +63,46 @@ class Groups(commands.Cog):
         await ctx.author.send(error)
 
     # -------------------------------------------------------------------------------------------------------
+    #    Function: customizegroups(self, ctx, total_groups, max_members)
+    #    Description: customize group settings
+    #    Inputs:
+    #    - self: used to access parameters passed to the class through the constructor
+    #    - ctx: used to access the values passed through the current context
+    #    - total_groups: total number of groups
+    #    - max_members: maximum members per group
+    #    Outputs: creates customized settings for groups
+    # -------------------------------------------------------------------------------------------------------
+    @commands.command(
+        name="customizegroups",
+        help="To use the customizegroups command, do: $customizegroups <Num> <Num> \n \
+    ( For example: $customizegroups 4 5)",
+        pass_context=True,
+    )
+    async def customizegroups(self, ctx, total_groups: int, max_members: int):
+        """Customize group settings"""
+        db.query(
+            "INSERT INTO group_settings (guild_id, total_groups, max_members) VALUES (%s, %s, %s)",
+            (ctx.guild.id, total_groups, max_members),
+        )
+        await ctx.send(
+            f"Group settings have been set with {total_groups} total groups, {max_members} maximum members"
+        )
+
+    # -------------------------------------------------------------------------------------------------------
+    #    Function: customizegroups_error(self, ctx, error)
+    #    Description: prints error message for customizegroups command
+    #    Inputs:
+    #       - ctx: context of the command
+    #       - error: error message
+    #    Outputs:
+    #       - Error details
+    # -------------------------------------------------------------------------------------------------------
+    @customizegroups.error
+    async def customizegroups_error(self, ctx, error):
+        """Error handling for customizegroups command"""
+        await ctx.author.send(error)
+
+    # -------------------------------------------------------------------------------------------------------
     #    Function: startupgroups(self, ctx)
     #    Description: creates roles for the groups
     #    Inputs:
@@ -74,8 +114,16 @@ class Groups(commands.Cog):
     async def startupgroups(self, ctx):
         """Creates roles for the groups"""
         await ctx.send("Creating roles....")
-
-        for i in range(100):
+        
+        total_groups = db.query(
+            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+            (ctx.guild.id,),
+        )[0][0] if db.query(
+            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+            (ctx.guild.id,),
+        ) else 99
+                
+        for i in range(total_groups):
             role_name = "group_" + str(i)
             existing_role = get(ctx.guild.roles, name=role_name)
             print(i)
@@ -108,8 +156,18 @@ class Groups(commands.Cog):
     # -------------------------------------------------------------------------------------------------------
     @commands.command(name="connect", help="Creates group roles for members")
     async def connect(self, ctx):
+        """Retrieve total groups"""
+        total_groups = db.query(
+            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+            (ctx.guild.id,),
+        )[0][0] if db.query(
+            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+            (ctx.guild.id,),
+        ) else 99
+        
+                
         """Connects all users with their groups"""
-        for i in range(100):
+        for i in range(total_groups):
             group_name = "group-" + str(i)
             existing_channel = get(ctx.guild.text_channels, name=group_name)
             if existing_channel is not None:
@@ -172,22 +230,41 @@ class Groups(commands.Cog):
         # get the name of the caller
         member_name = ctx.message.author.display_name.upper()
         member = ctx.message.author
+        
+        """Retrieve total groups"""
+        total_groups = db.query(
+            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+            (ctx.guild.id,),
+        )[0][0] if db.query(
+            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+            (ctx.guild.id,),
+        ) else 99
 
-        if group_num < 0 or group_num > 99:
+        if group_num < 0 or group_num > total_groups:
             await ctx.send("Not a valid group")
             await ctx.send(
                 "To use the join command, do: $join <Num> "
-                "where 0 <= <Num> <= 99 \n ( For example: $join 0 )"
+                "where 0 <= <Num> <= total groups$ \n ( For example: $join 0 )"
             )
             return
 
+
+        """Retrieve maximum members in a group"""
+        max_members = db.query(
+            "SELECT max_members FROM group_settings WHERE guild_id = %s",
+            (ctx.guild.id,),
+        )[0][0] if db.query(
+            "SELECT max_members FROM group_settings WHERE guild_id = %s",
+            (ctx.guild.id,),
+        ) else 6
+        
         group_count = db.query(
             "SELECT COUNT(group_num) FROM group_members WHERE guild_id = %s AND group_num = %s",
             (ctx.guild.id, group_num),
         )
-
-        if group_count == 6:
-            await ctx.send("A group cannot have more than 6 people!")
+                   
+        if group_count == max_members:
+            await ctx.send(f"A group cannot have more than {max_members} people!")
             return
 
         current_group_num = db.query(
@@ -213,7 +290,7 @@ class Groups(commands.Cog):
         await member.add_roles(role)
 
         await ctx.send(
-            f"You are now in Group {group_num}! There are now {group_count[0][0] + 1}/6 members."
+            f"You are now in Group {group_num}! There are now {group_count[0][0] + 1}/ {max_members} members."
         )
 
     # -------------------------------------------------------------------------------------------------------
