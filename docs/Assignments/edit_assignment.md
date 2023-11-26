@@ -21,6 +21,6 @@ $edit_assignment test1 tests 100
 ```
 Successful execution of this command will edit an assignment in the database with the given name, with the desired category, and points. The bot will report on the success or failure of the command.
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/editAssignmentHelp.PNG?raw=true" width="500">
+<img src="../../data/proj2media/editAssignmentHelp.PNG" width="500">
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/editAssignment.PNG?raw=true" width="500">
+<img src="../../data/proj2media/editAssignment.PNG" width="500">

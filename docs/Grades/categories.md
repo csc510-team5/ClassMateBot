@@ -21,8 +21,8 @@ $categories
 ```
 Successful execution of this command will list the categories and corresponding weights in a dm to the user
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/categoriesHelp.PNG?raw=true" width="500">
+<img src="../../data/proj2media/categoriesHelp.PNG" width="500">
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/categories.PNG?raw=true" width="500">
+<img src="../../data/proj2media/categories.PNG" width="500">
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/categoriesDM.PNG?raw=true" width="500">
+<img src="../../data/proj2media/categoriesDM.PNG" width="500">

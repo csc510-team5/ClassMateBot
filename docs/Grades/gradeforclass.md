@@ -20,4 +20,4 @@ $gradeforclass
 ```
 Successful execution of this command will DM the student their overall grade for the course.
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/gradeforclassHelp.png?raw=true" width="500">
+<img src="../../data/proj2media/gradeforclassHelp.png" width="500">

@@ -21,6 +21,6 @@ $add_grade_category Tests .5
 ```
 Successful execution of this command will add a grade category into the database with the desired weight. The bot will report on the success or failure of the command.
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/addGradeCategoryHelp.PNG?raw=true" width="500">
+<img src="../../data/proj2media/addGradeCategoryHelp.PNG" width="500">
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/addGradeCategory.PNG?raw=true" width="500">
+<img src="../../data/proj2media/addGradeCategory.PNG" width="500">

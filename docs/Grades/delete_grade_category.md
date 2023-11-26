@@ -21,6 +21,6 @@ $delete_grade_category Tests
 ```
 Successful execution of this command will delete a grade category in the database. The bot will report on the success or failure of the command.
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/deleteGradeCategoryHelp.PNG?raw=true" width="500">
+<img src="../../data/proj2media/deleteGradeCategoryHelp.PNG" width="500">
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/deleteGradeCategory.PNG?raw=true" width="500">
+<img src="../../data/proj2media/deleteGradeCategory.PNG" width="500">

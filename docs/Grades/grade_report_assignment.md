@@ -21,8 +21,8 @@ $grade_report_assignment
 ```
 Successful execution of this command will send a DM to the instructor with the grading breakdown.
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/gradeReportAssignmentHelp.PNG?raw=true" width="500">
+<img src="../../data/proj2media/gradeReportAssignmentHelp.PNG" width="500">
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/gradeReportAssignment.PNG?raw=true" width="500">
+<img src="../../data/proj2media/gradeReportAssignment.PNG" width="500">
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/gradeReportAssignmentDM.PNG?raw=true" width="500">
+<img src="../../data/proj2media/gradeReportAssignmentDM.PNG" width="500">

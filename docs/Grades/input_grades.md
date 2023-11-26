@@ -22,6 +22,6 @@ $inputgrades HW1
 ```
 Successful execution of this command will update the grades in the database and report to the instructor the amount that were added, if any were skipped over, and the amount of grades that were edited.
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/inputGradesHelp.PNG?raw=true" width="500">
+<img src="../../data/proj2media/inputGradesHelp.PNG" width="500">
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/inputGrades.PNG?raw=true" width="500">
+<img src="../../data/proj2media/inputGrades.PNG" width="500">

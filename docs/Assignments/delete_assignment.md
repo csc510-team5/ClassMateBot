@@ -20,6 +20,6 @@ $delete_assignment test1
 ```
 Successful execution of this command will delete an assignment from the database. The bot will report on the success or failure of the command.
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/deleteAssignmentHelp.PNG?raw=true" width="500">
+<img src="../../data/proj2media/deleteAssignmentHelp.PNG" width="500">
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/deleteAssignment.PNG?raw=true" width="500">
+<img src="../../data/proj2media/deleteAssignment.PNG" width="500">

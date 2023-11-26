@@ -21,4 +21,4 @@ $graderequired tests 200 90
 ```
 Successful execution of this command will DM the student the grade required on the next hypothetical assignment to keep a desired grade in the course.
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/graderequiredforclassHelp.png?raw=true" width="500">
+<img src="../../data/proj2media/graderequiredforclassHelp.png" width="500">
