@@ -358,6 +358,13 @@ For the assignments.py file
 
 <table>
   <tr>
+    <td><a href="https://github.com/csc510-team5/ClassMateBot">Project 3</a></td>
+    <td align="center"><a href="https://github.com/jwgerlach00"><img src="https://avatars.githubusercontent.com/u/57069011?v=4" width="75px;" alt=""/><br /><sub><b>Jacob Gerlach</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/Sana-Ma"><img src="https://avatars.githubusercontent.com/u/70275715?v=4" width="75px;" alt=""/><br /><sub><b>Sana Mahmoud</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/Uchswas"><img src="https://avatars.githubusercontent.com/u/19565049?v=4" width="75px;" alt=""/><br /><sub><b>Uchswas Paul</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/tackyunicorn"><img src="https://avatars.githubusercontent.com/u/26558907?v=4" width="75px;" alt=""/><br /><sub><b>Joshua Joseph</b></sub></a></td>
+  </tr>
+  <tr>
     <td><a href="https://github.com/nfoster1492/ClassMateBot-1">Project 2</a></td>
     <td align="center"><a href="https://github.com/brwali/"><img src="https://avatars.githubusercontent.com/u/144480335?v=4" width="75px;" alt=""/><br /><sub><b>Brandon Walia</b></sub></a></td>
     <td align="center"><a href="https://github.com/nathankohen/"><img src="https://avatars.githubusercontent.com/u/99231385?v=4" width="75px;" alt=""/><br /><sub><b>Nathan Kohen</b></sub></a><br /></td>
