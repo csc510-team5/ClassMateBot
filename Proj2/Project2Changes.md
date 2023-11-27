@@ -35,6 +35,6 @@ This table was required for the instructor to be able to create assignments and 
 Supporting the functionality added in this project required the modification of the existing `reminders` table. To better reflect how we leveraged this table, the `homework_name` column was renamed `reminder_name`.
 
 ## Documentation
-This version includes a more detailed [Installation Guide](https://github.com/nfoster1492/ClassMateBot-1/blob/main/docs/installation.md) including the new database and calendar setup instructions.
+This version includes a more detailed [Installation Guide](../docs/installation.md) including the new database and calendar setup instructions.
 
-This version includes a [troubleshooting guide](https://github.com/nfoster1492/ClassMateBot-1/blob/main/docs/troubleshoot.md) to help future developers or users resolve issues.
+This version includes a [troubleshooting guide](../docs/troubleshoot.md) to help future developers or users resolve issues.
