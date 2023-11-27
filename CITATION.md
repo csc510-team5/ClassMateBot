@@ -1,4 +1,20 @@
-Cite as
+For Version 5 Cite as
+
+Jacob Gerlach, Sana Mahmoud, Uchswas Paul, Joshua Joseph. (2023, November 27). csc510-team5/ClassMateBot (Version v5).
+Zenodo. https://doi.org/10.5281/zenodo.5673334
+
+```
+@software{csc510-team5/ClassMateBot,
+  title     = {csc510-team5/ClassMateBot (Version v5)},
+  DOI       = {10.5281/zenodo.10023404}, 
+  author    = {Jacob Gerlach, Sana Mahmoud, Uchswas Paul, Joshua Joseph}, 
+  publisher = {Zenodo}, 
+  year      = {2023}, 
+  month     = {November}
+}
+```
+
+For Version 4 Cite as
 
 Brandon Walia, Nicholas Foster, Robert Kenney, Nathan Kohen. (2023, October 19). nfoster1492/ClassMateBot-1 (Version v4).
 Zenodo. https://doi.org/10.5281/zenodo.5673334
@@ -60,4 +76,3 @@ Chaitanya Patel, Walter Brown, Sumedh Salvi, Kunwar Vidhan, & Sunil Upare. (2021
   month     = {August}
 }
 ```
-

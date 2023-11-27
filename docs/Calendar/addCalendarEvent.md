@@ -2,7 +2,7 @@
 This command lets the user add an event to the shared Google Calendar
 
 # Location of Code
-The code that implements the above mentioned gets functionality is located [here](https://github.com/nfoster1492/ClassMateBot-1/blob/main/cogs/calendar.py)
+The code that implements the above mentioned gets functionality is located [here](../../cogs/calendar.py)
 
 # Code Description
 ## Functions
@@ -17,4 +17,4 @@ $addCalendarEvent HW1a CSC510 2023-10-11T12:00:00Z
 ```
 Successful execution of this command will result in an event being placed on the shared calendar for all subscribers to see and confirmation output.
 
-![image](https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/addCalendarEvent.png)
+![image](../../data/proj2media/addCalendarEvent.png)
