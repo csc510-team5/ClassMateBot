@@ -93,6 +93,7 @@ class Calendar(commands.Cog):
             print(f"An error occurred: {error}")
 
     @commands.command(name="add_office_hours")
+    # pylint: disable=too-many-arguments
     async def add_office_hours(
         self, ctx, ta_name, event_time, end_year, end_month, end_day
     ):
@@ -116,6 +117,7 @@ class Calendar(commands.Cog):
             print(f"An error occurred: {error}")
 
     @commands.command(name="add_lectures")
+    # pylint: disable=too-many-arguments
     async def add_lectures(
         self, ctx, class_name, address, event_time, end_year, end_month, end_day
     ):

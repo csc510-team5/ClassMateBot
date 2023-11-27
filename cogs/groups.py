@@ -173,7 +173,7 @@ class Groups(commands.Cog):
             else 99
         )
 
-        """Connects all users with their groups"""
+        # Connects all users with their groups
         for i in range(total_groups):
             group_name = "group-" + str(i)
             existing_channel = get(ctx.guild.text_channels, name=group_name)
@@ -238,7 +238,7 @@ class Groups(commands.Cog):
         member_name = ctx.message.author.display_name.upper()
         member = ctx.message.author
 
-        """Retrieve total groups"""
+        # Retrieve total groups
         total_groups = (
             db.query(
                 "SELECT total_groups FROM group_settings WHERE guild_id = %s",
@@ -259,7 +259,7 @@ class Groups(commands.Cog):
             )
             return
 
-        """Retrieve maximum members in a group"""
+        # Retrieve maximum members in a group
         max_members = (
             db.query(
                 "SELECT max_members FROM group_settings WHERE guild_id = %s",

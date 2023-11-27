@@ -59,7 +59,7 @@ def get_grade_for_class(member_name: str, guild_id: str) -> int:
         weight_total += float(category_weight)
 
     if no_grades:
-        raise ValueError(f"No assignments are graded")
+        raise ValueError("No assignments are graded")
 
     return (
         class_total / weight_total
@@ -107,7 +107,7 @@ class Grades(commands.Cog):
                     f'"{letter_grade}" added with lower bound: {lower_bound}, '
                     + f"and upper bound: {upper_bound}"
                 )
-        except Exception as e:
+        except ValueError as e:
             await ctx.author.send(str(e))
 
     # -----------------------------------------------------------------------------------------------------------------
@@ -321,7 +321,7 @@ class Grades(commands.Cog):
                 + f"Forcasted GPA: {forcasted_gpa:.2f}"
             )
 
-        except Exception as e:
+        except ValueError as e:
             await ctx.author.send(str(e))
             print(e)
 

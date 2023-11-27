@@ -72,7 +72,11 @@ def plagiarism(text: str) -> dict:
     }
 
     res = requests.post(
-        plag_checker_url, headers=headers, cookies=cookies, data=request_data
+        plag_checker_url,
+        headers=headers,
+        cookies=cookies,
+        data=request_data,
+        timeout=10,
     )
     return json.loads(res.text)
 
