@@ -79,18 +79,14 @@ CREATE TABLE answers (
     author_role     VARCHAR NOT NULL
 );
 
-<<<<<<< HEAD
-CREATE TABLE attendance(
-    guild_id        BIGINT NOT NULL,
-    student_name    BIGINT NOT NULL,
-    class_date      VARCHAR NOT NULL,
-    author_id       BIGINT,
-    author_role     VARCHAR NOT NULL       
-)
-=======
 CREATE TABLE group_settings (
     guild_id        BIGINT NOT NULL,
     total_groups    INT NOT NULL,
     max_members     INT NOT NULL
 )
->>>>>>> 340782fcb595cee232abcbe1df2a861312a349d9
+
+CREATE TABLE resources(
+    guild_id        BIGINT NOT NULL,
+    topic_name      VARCHAR NOT NULL,
+    resource_link       VARCHAR NOT NULL    
+)
