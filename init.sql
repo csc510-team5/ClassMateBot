@@ -83,10 +83,10 @@ CREATE TABLE group_settings (
     guild_id        BIGINT NOT NULL,
     total_groups    INT NOT NULL,
     max_members     INT NOT NULL
-)
+);
 
 CREATE TABLE resources(
     guild_id        BIGINT NOT NULL,
     topic_name      VARCHAR NOT NULL,
-    resource_link       VARCHAR NOT NULL    
+    resource_link   VARCHAR NOT NULL    
 )
