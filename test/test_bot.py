@@ -2342,6 +2342,7 @@ async def test_get_calendar_downloads(bot):
                 assert component.dtstart.valueRepr().day == caldate.day
                 assert component.dtstart.valueRepr().hour == caldate.hour
 
+
 @pytest.mark.asyncio
 async def test_get_resource_by_topic(bot):
     # create instuctor user
