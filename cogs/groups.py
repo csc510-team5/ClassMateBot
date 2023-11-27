@@ -114,15 +114,19 @@ class Groups(commands.Cog):
     async def startupgroups(self, ctx):
         """Creates roles for the groups"""
         await ctx.send("Creating roles....")
-        
-        total_groups = db.query(
-            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
-            (ctx.guild.id,),
-        )[0][0] if db.query(
-            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
-            (ctx.guild.id,),
-        ) else 99
-                
+
+        total_groups = (
+            db.query(
+                "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+                (ctx.guild.id,),
+            )[0][0]
+            if db.query(
+                "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+                (ctx.guild.id,),
+            )
+            else 99
+        )
+
         for i in range(total_groups):
             role_name = "group_" + str(i)
             existing_role = get(ctx.guild.roles, name=role_name)
@@ -157,16 +161,19 @@ class Groups(commands.Cog):
     @commands.command(name="connect", help="Creates group roles for members")
     async def connect(self, ctx):
         """Retrieve total groups"""
-        total_groups = db.query(
-            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
-            (ctx.guild.id,),
-        )[0][0] if db.query(
-            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
-            (ctx.guild.id,),
-        ) else 99
-        
-                
-        """Connects all users with their groups"""
+        total_groups = (
+            db.query(
+                "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+                (ctx.guild.id,),
+            )[0][0]
+            if db.query(
+                "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+                (ctx.guild.id,),
+            )
+            else 99
+        )
+
+        # Connects all users with their groups
         for i in range(total_groups):
             group_name = "group-" + str(i)
             existing_channel = get(ctx.guild.text_channels, name=group_name)
@@ -230,15 +237,19 @@ class Groups(commands.Cog):
         # get the name of the caller
         member_name = ctx.message.author.display_name.upper()
         member = ctx.message.author
-        
-        """Retrieve total groups"""
-        total_groups = db.query(
-            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
-            (ctx.guild.id,),
-        )[0][0] if db.query(
-            "SELECT total_groups FROM group_settings WHERE guild_id = %s",
-            (ctx.guild.id,),
-        ) else 99
+
+        # Retrieve total groups
+        total_groups = (
+            db.query(
+                "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+                (ctx.guild.id,),
+            )[0][0]
+            if db.query(
+                "SELECT total_groups FROM group_settings WHERE guild_id = %s",
+                (ctx.guild.id,),
+            )
+            else 99
+        )
 
         if group_num < 0 or group_num > total_groups:
             await ctx.send("Not a valid group")
@@ -248,21 +259,24 @@ class Groups(commands.Cog):
             )
             return
 
+        # Retrieve maximum members in a group
+        max_members = (
+            db.query(
+                "SELECT max_members FROM group_settings WHERE guild_id = %s",
+                (ctx.guild.id,),
+            )[0][0]
+            if db.query(
+                "SELECT max_members FROM group_settings WHERE guild_id = %s",
+                (ctx.guild.id,),
+            )
+            else 6
+        )
 
-        """Retrieve maximum members in a group"""
-        max_members = db.query(
-            "SELECT max_members FROM group_settings WHERE guild_id = %s",
-            (ctx.guild.id,),
-        )[0][0] if db.query(
-            "SELECT max_members FROM group_settings WHERE guild_id = %s",
-            (ctx.guild.id,),
-        ) else 6
-        
         group_count = db.query(
             "SELECT COUNT(group_num) FROM group_members WHERE guild_id = %s AND group_num = %s",
             (ctx.guild.id, group_num),
         )
-                   
+
         if group_count == max_members:
             await ctx.send(f"A group cannot have more than {max_members} people!")
             return
