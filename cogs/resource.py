@@ -33,23 +33,24 @@ class Resource(commands.Cog):
     @commands.command(
         name="addResource",
         help="To use the addResource command, do: $addResource <topic_name> <resource_link>  \n \
-        ( For example: $addResource Ethical_Software_Engineering, https://github.com/txt/se23/blob/main/docs/ethics.md  )"
+        ( For example: $addResource Ethical_Software_Engineering, https://github.com/txt/se23/blob/main/docs/ethics.md  )",
     )
     async def addResource(self, ctx, topic, resource_link):
         db.query(
             "INSERT INTO resources (guild_id, topic_name, resource_link) VALUES (%s, %s, %s)",
-            (ctx.guild.id,  topic, resource_link),
+            (ctx.guild.id, topic, resource_link),
         )
         await ctx.send(f"Resource successfully added to the topic {topic}")
         return
+
     @addResource.error
     async def addResource_error(self, ctx, error):
         """Error handling for resource add"""
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("To use the addResource command, do: $addResource <topic_name> <resource_link>  \n \
+            await ctx.send(
+                "To use the addResource command, do: $addResource <topic_name> <resource_link>  \n \
             ( For example: $addResource Ethical_Software_Engineering, https://github.com/txt/se23/blob/main/docs/ethics.md  )"
             )
-
 
     # -------------------------------------------------------------------------------------------------------
     #    Function: showAllResource(self, ctx):
@@ -61,7 +62,7 @@ class Resource(commands.Cog):
     # -------------------------------------------------------------------------------------------------------
     @commands.command(
         name="showAllResource",
-        help="To use the showAllResource command, do: $showAllResource"
+        help="To use the showAllResource command, do: $showAllResource",
     )
     async def showAllResource(self, ctx):
         result = db.query("SELECT * FROM resources")
@@ -69,12 +70,16 @@ class Resource(commands.Cog):
         if not result:
             await ctx.send("No resources found.")
             return
-        embed = discord.Embed(title="List of Resources", color=0x00ff00)
+        embed = discord.Embed(title="List of Resources", color=0x00FF00)
 
         for row in result:
             topic = row[1]
             resource_link = row[2]
-            embed.add_field(name=f"Topic: {topic}", value=f"Resource Link: {resource_link}", inline=False)
+            embed.add_field(
+                name=f"Topic: {topic}",
+                value=f"Resource Link: {resource_link}",
+                inline=False,
+            )
         await ctx.send(embed=embed)
         return
 
@@ -95,16 +100,20 @@ class Resource(commands.Cog):
     @commands.command(
         name="showResourceByTopic",
         help="To use the showResourceByTopic command, do: $showResourceByTopic <Topic Name> \n \
-        To see the Topic List, use $showTopicList"
+        To see the Topic List, use $showTopicList",
     )
     async def showResourceByTopic(self, ctx, topic_name):
-        result = db.query("SELECT * FROM resources WHERE topic_name = %s", (topic_name,))
+        result = db.query(
+            "SELECT * FROM resources WHERE topic_name = %s", (topic_name,)
+        )
 
         if not result:
             await ctx.send("No resources found.")
             return
 
-        embed = discord.Embed(title=f"List of Resources for topic {topic_name}", color=0x00ff00)
+        embed = discord.Embed(
+            title=f"List of Resources for topic {topic_name}", color=0x00FF00
+        )
 
         for row in result:
             topic = row[1]
@@ -118,10 +127,13 @@ class Resource(commands.Cog):
     async def showResourceByTopic_error(self, ctx, error):
         """Error handling for getting resource"""
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("To use the showResourceByTopic command, do: $showResourceByTopic <Topic Name> \n \
-            To see the Topic List, use $showTopicList")
+            await ctx.send(
+                "To use the showResourceByTopic command, do: $showResourceByTopic <Topic Name> \n \
+            To see the Topic List, use $showTopicList"
+            )
         else:
             print(error)
+
     # -------------------------------------------------------------------------------------------------------
     #    Function: deleteResource(self, ctx, topic, resource_link):
     #    Description: This function will delete a resource from the resource list
@@ -137,28 +149,34 @@ class Resource(commands.Cog):
         name="deleteResource",
         help="To use the deleteResource command, do: $deleteResource <topic_name> <resource_link>  \n \
         ( For example: $deleteResource Ethical_Software_Engineering, https://github.com/txt/se23/blob/main/docs/ethics.md  ) \n \
-        To see all the resource use $showAllResource"
-        )
+        To see all the resource use $showAllResource",
+    )
     async def deleteResource(self, ctx, topic, resource_link):
-        result = db.query("SELECT * FROM resources WHERE guild_id = %s AND topic_name = %s AND resource_link = %s",
-                    (ctx.guild.id, topic, resource_link))
-
+        result = db.query(
+            "SELECT * FROM resources WHERE guild_id = %s AND topic_name = %s AND resource_link = %s",
+            (ctx.guild.id, topic, resource_link),
+        )
         if not result:
-            await ctx.send("No matching element found.To see all the resouce use $showAllResource")
+            await ctx.send(
+                "No matching element found.To see all the resouce use $showAllResource"
+            )
             return
-        db.query("DELETE FROM resources WHERE topic_name = %s AND resource_link = %s",
-        (topic, resource_link))
+        db.query(
+            "DELETE FROM resources WHERE topic_name = %s AND resource_link = %s",
+            (topic, resource_link),
+        )
         await ctx.send("The Resource has been deleted successfully.")
         return
+
     @deleteResource.error
     async def deleteResource_error(self, ctx, error):
         """Error handling for resource add"""
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("To use the deleteResource command, do: $deleteResource <topic_name> <resource_link>  \n \
+            await ctx.send(
+                "To use the deleteResource command, do: $deleteResource <topic_name> <resource_link>  \n \
             ( For example: $DeleteResource Ethical_Software_Engineering, https://github.com/txt/se23/blob/main/docs/ethics.md  ) \n \
             To see all the resource use $showAllResource"
             )
-
 
     # -------------------------------------------------------------------------------------------------------
     #    Function: showTopicList(self, ctx):
@@ -170,11 +188,10 @@ class Resource(commands.Cog):
     # -------------------------------------------------------------------------------------------------------
     @commands.command(
         name="showTopicList",
-        help="To use the showTopicList command, do: $showTopicList"
+        help="To use the showTopicList command, do: $showTopicList",
     )
     async def showTopicList(self, ctx):
         result = db.query("SELECT DISTINCT topic_name FROM resources")
-
         if not result:
             await ctx.send("No topic has been created yet.")
             return
