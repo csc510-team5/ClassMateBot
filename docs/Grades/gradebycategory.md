@@ -22,4 +22,4 @@ $gradebycategory projects
 ```
 Successful execution of this command will send a DM to the student with their average grade for the given category.
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/1453b81e4ad9fdc99b744fb35c859f2b0829e8b9/data/proj2media/gradebycategoryHelp.png" width="500">
+<img src="../../data/proj2media/gradebycategoryHelp.png" width="500">
