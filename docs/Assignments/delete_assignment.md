@@ -5,7 +5,7 @@ This command lets the instructor delete an existing gradeable assignment
 This command was introduced by [CSC510-Group-1](https://github.com/nfoster1492/ClassMateBot-1/).
 
 # Location of Code
-The code that implements the above mentioned functionality is located in `[cogs/grades.py](https://github.com/nfoster1492/ClassMateBot-1/tree/main/cogs/assignments.py)`.
+The code that implements the above mentioned functionality is located in [cogs/assignments.py](../../cogs/assignments.py).
 
 # Code Description
 ## Functions

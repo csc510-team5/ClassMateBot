@@ -5,7 +5,7 @@ This command allows the instructor to edit an existing grade category with a des
 This command was introduced by [CSC510-Group-1](https://github.com/nfoster1492/ClassMateBot-1/).
 
 # Location of Code
-The code that implements the above mentioned functionality is located in `[cogs/grades.py](https://github.com/nfoster1492/ClassMateBot-1/tree/main/cogs/grades.py)`.
+The code that implements the above mentioned functionality is located in [cogs/grades.py](../../cogs/grades.py).
 
 # Code Description
 ## Functions
