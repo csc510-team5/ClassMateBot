@@ -196,4 +196,3 @@ class Resource(commands.Cog):
 async def setup(bot):
     """Adds the file to the bot's cog system"""
     await bot.add_cog(Resource(bot))
-   

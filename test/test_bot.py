@@ -2353,15 +2353,41 @@ async def test_get_resource_by_topic(bot):
     role = discord.utils.get(guild.roles, name="Instructor")
     await dpytest.add_role(user, role)
 
-    ##Testing add resource
-    await dpytest.message("$addResource Testing https://github.com/txt/se23/blob/main/docs/testing1.md")
-    assert dpytest.verify().message().contains().content("Resource successfully added to the Testing")
-
-    ##Testing delete Resource
-
-    await dpytest.message("$deleteResource Testing https://github.com/txt/se23/blob/main/docs/testing1.md")
-    assert dpytest.verify().message().contains().content("The Resource has been deleted successfully.")
-
-    ##Test missing argument topic
-    await dpytest.message("$showResourceByTopic")
-    assert dpytest.verify().message().contains().content("To use the showResourceByTopic command, do: $showResourceByTopic <Topic Name>")
+     ##Testing add resource
+-    await dpytest.message("$addResource Testing https://github.com/txt/se23/blob/main/docs/testing1.md")
+-    assert dpytest.verify().message().contains().content("Resource successfully added to the Testing")
++    await dpytest.message(
++        "$addResource Testing https://github.com/txt/se23/blob/main/docs/testing1.md"
++    )
++    assert (
++        dpytest.verify()
++        .message()
++        .contains()
++        .content("Resource successfully added to the Testing")
++    )
+ 
+     ##Testing delete Resource
+ 
+-    await dpytest.message("$deleteResource Testing https://github.com/txt/se23/blob/main/docs/testing1.md")
+-    assert dpytest.verify().message().contains().content("The Resource has been deleted successfully.")
++    await dpytest.message(
++        "$deleteResource Testing https://github.com/txt/se23/blob/main/docs/testing1.md"
++    )
++    assert (
++        dpytest.verify()
++        .message()
++        .contains()
++        .content("The Resource has been deleted successfully.")
++    )
+ 
+     ##Test missing argument topic
+     await dpytest.message("$showResourceByTopic")
+-    assert dpytest.verify().message().contains().content("To use the showResourceByTopic command, do: $showResourceByTopic <Topic Name>")
++    assert (
++        dpytest.verify()
++        .message()
++        .contains()
++        .content(
++            "To use the showResourceByTopic command, do: $showResourceByTopic <Topic Name>"
++        )
++    )
