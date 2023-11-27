@@ -8,7 +8,14 @@ from discord.ext import commands
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import db
 
-
+# -----------------------------------------------------------------------------------------------------------------
+#    Function: plagiarism(text: str) -> dict
+#    Description: Uses papersowl API free service to check for plagiarism in a string by providing a percent
+#    plagiarism score and links to the most common online webpages.
+#    Inputs:
+#    - text: used to access parameters passed to the class through the constructor
+#    Outputs: Result of plagiarism screen in a JSON format.
+# -----------------------------------------------------------------------------------------------------------------
 def plagiarism(text: str) -> dict:
     plag_checker_url = "https://papersowl.com:443/plagiarism-checker-send-data"
     cookies = {
@@ -85,6 +92,16 @@ class Plagiarism(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # -----------------------------------------------------------------------------------------------------------------
+    #    Function: check_plagiarism(self, ctx) -> dict
+    #    Description: Uses papersowl API free service to check for plagiarism in a docx or txt file by providing a
+    #    percent
+    #    plagiarism score and links to the most common online webpages.
+    #    Inputs:
+    #    - self: used to access parameters passed to the class through the constructor
+    #    - ctx: used to access the values passed through the current context
+    #    Outputs: Result of plagiarism screen in a JSON format.
+    # -----------------------------------------------------------------------------------------------------------------
     @commands.has_role("Instructor")
     @commands.command(
         name="check_plagiarism", help="check attached txt file for plagiarism"
@@ -105,6 +122,19 @@ class Plagiarism(commands.Cog):
             + f'Matches: {str(res["matches"])}'
         )
 
+    # -----------------------------------------------------------------------------------------------------------------
+    #    Function: check_plagiarism(self, ctx, member_name: str, assignment_name: str,
+    #    max_plagiarism_percent: str) -> dict
+    #    Description: Uses papersowl API free service to grae for plagiarism in a docx or txt file. Uses percent
+    #    plagiarism score to determine whether or not a student should receive a zero for the assignment.
+    #    Inputs:
+    #    - self: used to access parameters passed to the class through the constructor
+    #    - ctx: used to access the values passed through the current context
+    #    - member_name: username of student to grade for
+    #    - assignment_name: name of assignment to grade for
+    #    - max_plagiarism_percent: maximum allowed plagiarism. Anything above receives a zero for the grade
+    #    Outputs: Context confirmation (Discord DB).
+    # -----------------------------------------------------------------------------------------------------------------
     @commands.has_role("Instructor")
     @commands.command(name="grade_for_plagiarism", help="")
     async def grade_for_plagiarism(
@@ -127,7 +157,7 @@ class Plagiarism(commands.Cog):
 
         res = plagiarism(response.text)
 
-        if (100 - float(res["percent"])) >= (
+        if (100 - float(res["percent"])) > (
             max_plagiarism_percent * 100
         ):  # greater-than or equal to % plagiarized
             grade_exists = (
