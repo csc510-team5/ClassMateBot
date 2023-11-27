@@ -5,7 +5,7 @@ This command lets a student get the grade they need on the next assignment to ke
 This command was introduced by [CSC510-Group-1](https://github.com/nfoster1492/ClassMateBot-1/).
 
 # Location of Code
-The code that implements the above mentioned functionality is located in `[cogs/grades.py](https://github.com/nfoster1492/ClassMateBot-1/tree/main/cogs/grades.py)`.
+The code that implements the above mentioned functionality is located in [cogs/grades.py](../../cogs/grades.py).
 
 # Code Description
 ## Functions
@@ -21,4 +21,4 @@ $graderequired tests 200 90
 ```
 Successful execution of this command will DM the student the grade required on the next hypothetical assignment.
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/main/data/proj2media/graderequiredHelp.png?raw=true" width="500">
+<img src="../../data/proj2media/graderequiredHelp.png" width="500">

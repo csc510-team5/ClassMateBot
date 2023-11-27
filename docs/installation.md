@@ -8,7 +8,7 @@ To set up and run the ClassMate Bot:
     * [pip](https://pip.pypa.io/en/stable/installation/)
 2. Clone this repo onto your local machine
     ```
-    git clone https://github.com/CSC510-Group-25/ClassMateBot.git
+    git clone https://github.com/csc510-team5/ClassMateBot.git
     cd ClassMateBot
     ```
 3. In the repository directory, run `pip install -r requirements.txt`
@@ -80,7 +80,7 @@ If you used the PostgreSQL installer, you should have a program called pgAdmin4.
 6. Go to the `Advanced` tab. Inside the **DB Restriction** field, enter your Heroku **Database** credential. (This is the same string you entered into **Maintenance Database**.) DO NOT SKIP THIS STEP.
 7. _Now_ you can press save.
 8. Inside your newly created server, open up the `Databases > Schemas > Public` drop down lists. Right click on `Tables` and select the `Query Tool`.
-9. Inside the query tool, click on `Query Editor.` Copy and paste the contents of [this SQL file](https://github.com/nfoster1492/ClassMateBot-1/blob/main/init.sql) into the editor and then click on the execute button (looks like a play button).
+9. Inside the query tool, click on `Query Editor.` Copy and paste the contents of [this SQL file](../init.sql) into the editor and then click on the execute button (looks like a play button).
 10. Right click on `Tables` and select `refresh`.
 
 Congratulations! You now have your tables set up.
@@ -162,4 +162,4 @@ Pylint configuration: `.pylintrc`
 
 To get the workflows to properly run, add the tokens in your .env file to your repository secrets. (**DO NOT UPLOAD .ENV** !!!)
 
-<img src="https://raw.githubusercontent.com/CSC510-Group-25/ClassMateBot/group25-command-docs/data/proj3media/cmbotsecrets.png" width="800">
+<img src="../data/proj3media/cmbotsecrets.png" width="800">

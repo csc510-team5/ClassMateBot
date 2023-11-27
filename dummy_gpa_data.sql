@@ -6,6 +6,10 @@ VALUES
     ('D', 1),
     ('F', 0);
 
+INSERT INTO name_mapping
+VALUES
+    ('1143956280222957578', 'cornonjacob', 'Jacob Gerlach');
+
 INSERT INTO previous_course_grades
 VALUES
     ('cornonjacob', 'CSC510', 'A'),
@@ -42,3 +46,4 @@ VALUES
     ('1143956280222957580', 'Ethical Software Enginnering', "https://github.com/txt/se23/blob/main/docs/ethics.md"),
     ('1143956280222957580', 'Software Testing', "https://github.com/txt/se23/blob/main/docs/testing1.md"),
     ('1143956280222957580', 'Version Controlling in SE', "https://github.com/txt/se23/blob/main/docs/cloud.md");
+

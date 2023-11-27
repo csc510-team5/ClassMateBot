@@ -5,7 +5,7 @@ This command lets a student get their grade for a certain assignment
 This command was introduced by [CSC510-Group-1](https://github.com/nfoster1492/ClassMateBot-1/).
 
 # Location of Code
-The code that implements the above mentioned functionality is located in `[cogs/grades.py](https://github.com/nfoster1492/ClassMateBot-1/tree/main/cogs/grades.py)`.
+The code that implements the above mentioned functionality is located in [cogs/grades.py](../../cogs/grades.py).
 
 # Code Description
 ## Functions
@@ -21,4 +21,4 @@ $grade hw1
 ```
 Successful execution of this command will DM the student their grade for that specific assignment.
 
-<img src="https://github.com/nfoster1492/ClassMateBot-1/blob/c8e9fdaf0560a8c93743aaba67ceccb8b94bd845/data/proj2media/gradeHelp.png" width="500">
+<img src="../../data/proj2media/gradeHelp.png" width="500">

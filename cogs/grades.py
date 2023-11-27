@@ -19,9 +19,11 @@ def get_grade_for_class(member_name: str, guild_id: str) -> int:
         "SELECT category_name, category_weight FROM grade_categories WHERE guild_id = %s ORDER BY category_weight DESC",
         (guild_id,),
     )
-    
+
     class_total = 0
-    
+    weight_total = 0
+    no_grades = True
+
     for category_name, category_weight in categories:
         grades = db.query(
             "SELECT grades.grade FROM grades INNER JOIN assignments ON grades.assignment_id = assignments.id INNER JOIN grade_categories ON assignments.category_id = grade_categories.id WHERE grades.guild_id = %s AND grades.member_name = %s AND grade_categories.category_name = %s ORDER BY grades.assignment_id",
@@ -34,10 +36,12 @@ def get_grade_for_class(member_name: str, guild_id: str) -> int:
         )
 
         if not grades:
-            raise RuntimeError(f"Grades for {category_name} do not exist")
+            continue
 
         if not points:
-            raise RuntimeError(f"Assignments for {category_name} do not exist")
+            continue
+
+        no_grades = False
 
         actual_grades = [x[0] for x in grades]
         actual_points = [x[0] for x in points]
@@ -51,45 +55,60 @@ def get_grade_for_class(member_name: str, guild_id: str) -> int:
 
         average = (total / points_total) * 100
 
-        class_total += (average * float(category_weight))
-        
-    return class_total
+        class_total += average * float(category_weight)
+        weight_total += float(category_weight)
+
+    if no_grades:
+        raise ValueError("No assignments are graded")
+
+    return (
+        class_total / weight_total
+    )  # corrrect for grades that are not yet inputted (null)
 
 
 class Grades(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.has_role("Instructor")
     @commands.command(
         name="add_grade_bound",
-        help='add upper bound and lower bound for a letter grade'
+        help="add upper bound and lower bound for a letter grade",
     )
-    async def add_grade_bound(self, ctx, letter_grade: str, lower_bound: float, upper_bound: float):
+    async def add_grade_bound(
+        self, ctx, letter_grade: str, lower_bound: float, upper_bound: float
+    ):
         try:
             exists_result = db.query(
-                '''SELECT lower_bound, upper_bound
+                """SELECT lower_bound, upper_bound
                 FROM grade_bounds
-                WHERE grade_letter = %s''',
-            (letter_grade,))
-            
+                WHERE grade_letter = %s""",
+                (letter_grade,),
+            )
+
             # ASSUMES THAT VALUES DO NOT OVERLAP AND ARE INPUT CORRECTLY
             if len(exists_result) >= 1:
                 db.query(
-                    '''UPDATE grade_bounds
+                    """UPDATE grade_bounds
                     SET lower_bound = %s, upper_bound = %s
-                    WHERE grade_letter = %s''',
-                (lower_bound, upper_bound, letter_grade))
-                await ctx.author.send(f'"{letter_grade}" lower bound updated from {exists_result[0][0]} to ' +
-                                      f'{lower_bound}, upper bound updated from {exists_result[0][1]} to {upper_bound}')
+                    WHERE grade_letter = %s""",
+                    (lower_bound, upper_bound, letter_grade),
+                )
+                await ctx.author.send(
+                    f'"{letter_grade}" lower bound updated from {exists_result[0][0]} to '
+                    + f"{lower_bound}, upper bound updated from {exists_result[0][1]} to {upper_bound}"
+                )
             else:
-                db.query('INSERT INTO grade_bounds VALUES (%s, %s, %s)', (letter_grade, lower_bound, upper_bound))
-                await ctx.author.send(f'"{letter_grade}" added with lower bound: {lower_bound}, ' +
-                                f'and upper bound: {upper_bound}')
-        except Exception as e:
+                db.query(
+                    "INSERT INTO grade_bounds VALUES (%s, %s, %s)",
+                    (letter_grade, lower_bound, upper_bound),
+                )
+                await ctx.author.send(
+                    f'"{letter_grade}" added with lower bound: {lower_bound}, '
+                    + f"and upper bound: {upper_bound}"
+                )
+        except ValueError as e:
             await ctx.author.send(str(e))
-        
-        
 
     # -----------------------------------------------------------------------------------------------------------------
     #    Function: grade(self, ctx, assignmentName)
@@ -232,7 +251,7 @@ class Grades(commands.Cog):
     #    - self: used to access parameters passed to the class through the constructor
     #    - ctx: used to access the values passed through the current context
     #    Outputs: Average grade of all the assignments in the class, weighted by category, accounting for assignment point values
-    # -----------------------------------------------------------------------------------------------------------------    
+    # -----------------------------------------------------------------------------------------------------------------
     @commands.command(
         name="gradeforclass",
         help="get your grade for the whole class $gradeforclass",
@@ -240,30 +259,30 @@ class Grades(commands.Cog):
     async def gradeforclass(self, ctx):
         """Lets a student get their overall average grade for the class"""
         try:
-            await ctx.author.send(f"Grade for class: {get_grade_for_class(ctx.author.name, ctx.guild.id):.2f}%")
-        except RuntimeError as e:
+            await ctx.author.send(
+                f"Grade for class: {get_grade_for_class(ctx.author.name, ctx.guild.id):.2f}%"
+            )
+        except ValueError as e:
             await ctx.author.send(str(e))
-            
-    @commands.command(
-        name="calculate_gpa"
-    )
+
+    @commands.command(name="calculate_gpa")
     async def calculate_gpa(self, ctx):
         try:
             curr_grade = get_grade_for_class(ctx.author.name, ctx.guild.id)
-            
-            curr_letter_grade = db.query(
-                f'''SELECT grade_point
+
+            curr_grade_point, curr_letter = db.query(
+                f"""SELECT grade_point, grade_letter
                 FROM (
                     SELECT grade_letter
                     FROM grade_bounds
                     WHERE {curr_grade} BETWEEN lower_bound AND upper_bound
                 ) AS curr_grade_letter
                 JOIN letter_grades
-                ON letter = grade_letter'''
-            )[0][0]
-            
+                ON letter = grade_letter"""
+            )[0]
+
             previous_gpa = db.query(
-                '''SELECT AVG(grade_point)
+                """SELECT AVG(grade_point)
                 FROM (
                     SELECT grade_point
                     FROM letter_grades JOIN (
@@ -272,11 +291,12 @@ class Grades(commands.Cog):
                         WHERE member_name = %s
                     ) AS student_grades
                     ON letter = course_grade
-                ) AS previous_grades''',
-            (ctx.author.name,))[0][0]
-            
+                ) AS previous_grades""",
+                (ctx.author.name,),
+            )[0][0]
+
             forcasted_gpa = db.query(
-                f'''SELECT AVG(grade_point)
+                f"""SELECT AVG(grade_point)
                 FROM (
                     SELECT grade_point
                     FROM letter_grades JOIN (
@@ -288,18 +308,20 @@ class Grades(commands.Cog):
 
                     UNION ALL
 
-                    SELECT {curr_letter_grade} AS grade_point
-                ) AS all_grades''',
-            (ctx.author.name,))[0][0]
-            
+                    SELECT {curr_grade_point} AS grade_point
+                ) AS all_grades""",
+                (ctx.author.name,),
+            )[0][0]
+
             await ctx.author.send(
-                f'Current grade for class: {curr_grade:.2f}\n' +
-                f'Current letter grade for class: {curr_letter_grade}\n' +
-                f'Previous GPA: {previous_gpa:.2f}\n' + 
-                f'Forcasted GPA: {forcasted_gpa:.2f}'
+                f"Current grade for class: {curr_grade:.2f}\n"
+                + f"Current letter grade for class: {curr_letter}\n"
+                + f"Current grade point for class: {curr_grade_point}\n"
+                + f"Previous GPA: {previous_gpa:.2f}\n"
+                + f"Forcasted GPA: {forcasted_gpa:.2f}"
             )
 
-        except Exception as e:
+        except ValueError as e:
             await ctx.author.send(str(e))
             print(e)
 
@@ -716,23 +738,28 @@ class Grades(commands.Cog):
         if existing:
             await ctx.author.send("This category has already been added..!!")
             return
-        
-        current_weight_sum = float(db.query(
-            '''SELECT SUM(category_weight)
+
+        current_weight_sum = float(
+            db.query(
+                """SELECT SUM(category_weight)
             FROM grade_categories
-            WHERE guild_id = %s''',
-        (ctx.guild.id,))[0][0])
+            WHERE guild_id = %s""",
+                (ctx.guild.id,),
+            )[0][0]
+        )
         if current_weight_sum + categoryweight > 1:
-            await ctx.author.send("This category weight would make the total weight less than 1..!!")
+            await ctx.author.send(
+                "This category weight would make the total weight less than 1..!!"
+            )
             return
-        
+
         db.query(
             "INSERT INTO grade_categories (guild_id, category_name, category_weight) VALUES (%s, %s, %s)",
             (ctx.guild.id, categoryname, weight),
         )
         await ctx.send(
             f"A grading category has been added for: {categoryname}  with weight: {weight} "
-        )         
+        )
 
     # -----------------------------------------------------------------------------------------------------------------
     #    Function: add_grade_category_error(self, ctx, error)

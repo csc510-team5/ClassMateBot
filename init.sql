@@ -79,6 +79,7 @@ CREATE TABLE answers (
     author_role     VARCHAR NOT NULL
 );
 
+<<<<<<< HEAD
 CREATE TABLE attendance(
     guild_id        BIGINT NOT NULL,
     student_name    BIGINT NOT NULL,
@@ -86,3 +87,10 @@ CREATE TABLE attendance(
     author_id       BIGINT,
     author_role     VARCHAR NOT NULL       
 )
+=======
+CREATE TABLE group_settings (
+    guild_id        BIGINT NOT NULL,
+    total_groups    INT NOT NULL,
+    max_members     INT NOT NULL
+)
+>>>>>>> 340782fcb595cee232abcbe1df2a861312a349d9

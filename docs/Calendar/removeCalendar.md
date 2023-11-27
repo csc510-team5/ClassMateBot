@@ -2,7 +2,7 @@
 This command allows the instructor to remove a specified user from the shared class Google Calendar.
 
 # Location of Code
-The code that implements the above mentioned gets functionality is located [here](https://github.com/nfoster1492/ClassMateBot-1/blob/main/cogs/calendar.py)
+The code that implements the above mentioned gets functionality is located [here](../../cogs/calendar.py)
 
 # Code Description
 ## Functions
