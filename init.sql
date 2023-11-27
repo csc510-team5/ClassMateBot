@@ -1,3 +1,21 @@
+DROP TABLE IF EXISTS reminders CASCADE;
+DROP TABLE IF EXISTS grade_categories CASCADE;
+DROP TABLE IF EXISTS assignments CASCADE;
+DROP TABLE IF EXISTS grades CASCADE;
+DROP TABLE IF EXISTS group_members CASCADE;
+DROP TABLE IF EXISTS project_groups CASCADE;
+DROP TABLE IF EXISTS name_mapping CASCADE;
+DROP TABLE IF EXISTS pinned_messages CASCADE;
+DROP TABLE IF EXISTS review_questions CASCADE;
+DROP TABLE IF EXISTS questions CASCADE;
+DROP TABLE IF EXISTS answers CASCADE;
+DROP TABLE IF EXISTS group_settings CASCADE;
+DROP TABLE IF EXISTS resources CASCADE;
+DROP TABLE IF EXISTS previous_course_grades;
+DROP TABLE IF EXISTS grade_bounds;
+DROP TABLE IF EXISTS letter_grades;
+
+
 CREATE TABLE reminders (
     guild_id        BIGINT NOT NULL,
     author_id       BIGINT NOT NULL,
@@ -89,4 +107,23 @@ CREATE TABLE resources(
     guild_id        BIGINT NOT NULL,
     topic_name      VARCHAR NOT NULL,
     resource_link   VARCHAR NOT NULL    
-)
+);
+
+CREATE TABLE letter_grades (
+    letter CHAR(2) PRIMARY KEY,
+    grade_point FLOAT UNIQUE NOT NULL
+);
+
+CREATE TABLE previous_course_grades (
+    member_name VARCHAR,
+    course_id VARCHAR(32),
+    course_grade CHAR(2) NOT NULL,
+    PRIMARY KEY(member_name, course_id)
+);
+
+CREATE TABLE grade_bounds (
+    grade_letter CHAR(2) PRIMARY KEY,
+    lower_bound FLOAT UNIQUE NOT NULL,
+    upper_bound FLOAT UNIQUE NOT NULL,
+    FOREIGN KEY(grade_letter) REFERENCES letter_grades(letter) ON UPDATE CASCADE ON DELETE CASCADE
+);

@@ -25,9 +25,9 @@ VALUES
 
 INSERT INTO grade_categories
 VALUES
-    (1, '1143956280222957578', 'project', 'midterm1', 0.200),
-    (3, '1143956280222957578', 'test', 'project1', 0.700),
-    (4, '1143956280222957578', 'hw', 'hw1', 0.100);
+    (1, '1143956280222957578', 'project', 0.200),
+    (3, '1143956280222957578', 'test', 0.700),
+    (4, '1143956280222957578', 'hw', 0.100);
 
 INSERT INTO assignments
 VALUES
@@ -43,7 +43,7 @@ VALUES
 
 INSERT INTO resources
 VALUES
-    ('1143956280222957580', 'Ethical Software Enginnering', "https://github.com/txt/se23/blob/main/docs/ethics.md"),
-    ('1143956280222957580', 'Software Testing', "https://github.com/txt/se23/blob/main/docs/testing1.md"),
-    ('1143956280222957580', 'Version Controlling in SE', "https://github.com/txt/se23/blob/main/docs/cloud.md");
+    ('1143956280222957580', 'Ethical Software Enginnering', 'https://github.com/txt/se23/blob/main/docs/ethics.md'),
+    ('1143956280222957580', 'Software Testing', 'https://github.com/txt/se23/blob/main/docs/testing1.md'),
+    ('1143956280222957580', 'Version Controlling in SE', 'https://github.com/txt/se23/blob/main/docs/cloud.md');
 
