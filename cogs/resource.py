@@ -26,7 +26,7 @@ class Resource(commands.Cog):
     #    - self: used to access parameters passed to the class through the constructor
     #    - ctx: used to access the values passed through the current context
     #    - topic : used to provide the name of a topic
-    #    - resource_link : used to provide the topic's resource link 
+    #    - resource_link : used to provide the topic's resource link
     #    Outputs: It will add a new rosource in the list of course material resource
     # -------------------------------------------------------------------------------------------------------
     @commands.has_role("Instructor")
@@ -69,7 +69,7 @@ class Resource(commands.Cog):
         if not result:
             await ctx.send("No resources found.")
             return
-        embed = discord.Embed(title="List of Resources", color=0x00ff00) 
+        embed = discord.Embed(title="List of Resources", color=0x00ff00)
 
         for row in result:
             topic = row[1]
@@ -129,7 +129,7 @@ class Resource(commands.Cog):
     #    - self: used to access parameters passed to the class through the constructor
     #    - ctx: used to access the values passed through the current context
     #    - topic : used to provide the name of a topic
-    #    - resource_link : used to provide the resource topic's link 
+    #    - resource_link : used to provide the resource topic's link
     #    Outputs: It will add a new rosource under a topic
     # -------------------------------------------------------------------------------------------------------
     @commands.has_role("Instructor")
