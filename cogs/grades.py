@@ -14,6 +14,15 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import db
 
 
+# -----------------------------------------------------------------------------------------------------------------
+#    Function: get_grade_for_class(member_name: str, guild_id: str) -> int
+#    Description: This function queries the DB to find current grade for class
+#    Inputs:
+#    - member_name: username of the member to get grade for
+#    - guild_id: guild ID of the member to get grade for
+#    Outputs: Total grade for the class given the grades that are currently available. If an assignment does not yet
+#    have a grade it's contributiont towards the total grade is ignored.
+# -----------------------------------------------------------------------------------------------------------------
 def get_grade_for_class(member_name: str, guild_id: str) -> int:
     categories = db.query(
         "SELECT category_name, category_weight FROM grade_categories WHERE guild_id = %s ORDER BY category_weight DESC",
@@ -26,18 +35,27 @@ def get_grade_for_class(member_name: str, guild_id: str) -> int:
 
     for category_name, category_weight in categories:
         grades = db.query(
-            "SELECT grades.grade FROM grades INNER JOIN assignments ON grades.assignment_id = assignments.id INNER JOIN grade_categories ON assignments.category_id = grade_categories.id WHERE grades.guild_id = %s AND grades.member_name = %s AND grade_categories.category_name = %s ORDER BY grades.assignment_id",
+            '''SELECT grades.grade
+            FROM grades
+            INNER JOIN assignments ON grades.assignment_id = assignments.id
+            INNER JOIN grade_categories ON assignments.category_id = grade_categories.id
+            WHERE grades.guild_id = %s AND grades.member_name = %s AND grade_categories.category_name = %s
+            ORDER BY grades.assignment_id''',
             (guild_id, member_name, category_name),
         )
 
         points = db.query(
-            "SELECT assignments.points FROM assignments INNER JOIN grade_categories ON assignments.category_id = grade_categories.id WHERE assignments.guild_id = %s AND grade_categories.category_name = %s ORDER BY assignments.id",
+            '''SELECT assignments.points
+            FROM assignments
+            INNER JOIN grade_categories ON assignments.category_id = grade_categories.id
+            WHERE assignments.guild_id = %s AND grade_categories.category_name = %s
+            ORDER BY assignments.id''',
             (guild_id, category_name),
         )
 
+        # Ignore if the assignment is not yet graded (does not yet contribute to grade)
         if not grades:
             continue
-
         if not points:
             continue
 
@@ -58,26 +76,33 @@ def get_grade_for_class(member_name: str, guild_id: str) -> int:
         class_total += average * float(category_weight)
         weight_total += float(category_weight)
 
-    if no_grades:
+    if no_grades:  # cannot give a grade because there are no assignments graded
         raise ValueError("No assignments are graded")
 
-    return (
-        class_total / weight_total
-    )  # corrrect for grades that are not yet inputted (null)
+    return class_total / weight_total  # correct for grades that are not yet inputted (null)
 
 
 class Grades(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # -----------------------------------------------------------------------------------------------------------------
+    #    Function: add_grade_bound(self, ctx, letter_grade: str, lower_bound: str, upper_bound: str)
+    #    Description: Command to set upper and lower bounds for a letter grade in the class.
+    #    Inputs:
+    #    - self: used to access parameters passed to the class through the constructor
+    #    - ctx: used to access the values passed through the current context
+    #    - letter_grade: letter grade to add bounds for or modify bounds of
+    #    - lower_bound: number for lower_bound to be that letter_grade (inclusive)
+    #    - upper_bound: number for upper_bound to be that letter_grade (inclusive)
+    #    Outputs: Context author confirmation (Discord DM).
+    # -----------------------------------------------------------------------------------------------------------------
     @commands.has_role("Instructor")
     @commands.command(
         name="add_grade_bound",
         help="add upper bound and lower bound for a letter grade",
     )
-    async def add_grade_bound(
-        self, ctx, letter_grade: str, lower_bound: float, upper_bound: float
-    ):
+    async def add_grade_bound(self, ctx, letter_grade: str, lower_bound: str, upper_bound: str):
         try:
             exists_result = db.query(
                 """SELECT lower_bound, upper_bound
@@ -88,6 +113,7 @@ class Grades(commands.Cog):
 
             # ASSUMES THAT VALUES DO NOT OVERLAP AND ARE INPUT CORRECTLY
             if len(exists_result) >= 1:
+                # If bounds already exist, update
                 db.query(
                     """UPDATE grade_bounds
                     SET lower_bound = %s, upper_bound = %s
@@ -99,6 +125,7 @@ class Grades(commands.Cog):
                     + f"{lower_bound}, upper bound updated from {exists_result[0][1]} to {upper_bound}"
                 )
             else:
+                # If bounds do not exist, insert
                 db.query(
                     "INSERT INTO grade_bounds VALUES (%s, %s, %s)",
                     (letter_grade, lower_bound, upper_bound),
@@ -237,7 +264,8 @@ class Grades(commands.Cog):
         """Error handling of gradebycategory function"""
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(
-                "To use the gradebycategory command, do: $gradebycategory <categoryname>\n ( For example: $gradebycategory tests )"
+                "To use the gradebycategory command, do: $gradebycategory <categoryname>\n" +
+                "( For example: $gradebycategory tests )"
             )
             await ctx.message.delete()
         else:
@@ -250,7 +278,8 @@ class Grades(commands.Cog):
     #    Inputs:
     #    - self: used to access parameters passed to the class through the constructor
     #    - ctx: used to access the values passed through the current context
-    #    Outputs: Average grade of all the assignments in the class, weighted by category, accounting for assignment point values
+    #    Outputs: Average grade of all the assignments in the class, weighted by category, accounting for assignment
+    #    point values
     # -----------------------------------------------------------------------------------------------------------------
     @commands.command(
         name="gradeforclass",
@@ -265,6 +294,15 @@ class Grades(commands.Cog):
         except ValueError as e:
             await ctx.author.send(str(e))
 
+    # -----------------------------------------------------------------------------------------------------------------
+    #    Function: calculate_gpa(self, ctx)
+    #    Description: This command lets a student get their FORCASTED gpa using grades in previous classes as well as
+    #    their forcasted GPA in their current class. Courses are weighted as if they all have the same weight.
+    #    Inputs:
+    #    - self: used to access parameters passed to the class through the constructor
+    #    - ctx: used to access the values passed through the current context
+    #    Outputs: Context message of forcasted GPA as well as current letter grade and points grade in class.
+    # -----------------------------------------------------------------------------------------------------------------
     @commands.command(name="calculate_gpa")
     async def calculate_gpa(self, ctx):
         try:
