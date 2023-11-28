@@ -265,6 +265,20 @@ For the groups.py file
 
 :open_file_folder: [$leave command](docs/Groups/leave.md)
 
+:open_file_folder: [$customizegroups command](docs/Groups/customizegroups.md) **(New Command in Project 3)**
+
+For the resource.py file
+
+:open_file_folder: [$addResource command](docs/Resource/addResource.md) **(New Command in Project 3)**
+
+:open_file_folder: [$deleteResource command](docs/Resource/deleteResource.md) **(New Command in Project 3)**
+
+:open_file_folder: [$showAllResource command](docs/Resource/showAllResource.md) **(New Command in Project 3)**
+
+:open_file_folder: [$showResourceByTopic command](docs/Resource/showResourceByTopic.md) **(New Command in Project 3)**
+
+:open_file_folder: [$showTopicList command](docs/Resource/showTopicList.md) **(New Command in Project 3)**
+
 For the qanda.py file
 
 :open_file_folder: [$ask command](docs/QandA/ask.md)
