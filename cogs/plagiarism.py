@@ -118,7 +118,7 @@ class Plagiarism(commands.Cog):
 
             res = plagiarism(response.text)
         else:
-            with open(test_path) as f:
+            with open(test_path, encoding="utf-8") as f:
                 text = f.read()
             res = plagiarism(text)
 
