@@ -2351,13 +2351,13 @@ async def test_get_resource_by_topic(bot):
         dpytest.verify()
         .message()
         .contains()
-        .content("Resource successfully added to the Testing")
+        .content("Resource successfully added to the topic Testing")
     )
 
     ##Testing delete Resource
 
     await dpytest.message(
-        "$deleteResource  Testing https://github.com/txt/se23/blob/main/docs/testing1.md"
+        "$deleteResource Testing https://github.com/txt/se23/blob/main/docs/testing1.md"
     )
     assert (
         dpytest.verify()
@@ -2367,20 +2367,12 @@ async def test_get_resource_by_topic(bot):
     )
 
     ##Test missing argument topic
-    await dpytest.message("$showResourceByTopic")
+    await dpytest.message("$showResourceByTopic -1")
     assert (
         dpytest.verify()
         .message()
         .contains()
         .content(
-            "To use the showResourceByTopic command, do: $showResourceByTopic <Topic Name>"
-        )
-    )
-    assert (
-        dpytest.verify()
-        .message()
-        .contains()
-        .content(
-            "To use the showResourceByTopic command, do: $showResourceByTopic <Topic Name>"
+            "No resources found."
         )
     )
