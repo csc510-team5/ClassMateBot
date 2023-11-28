@@ -1,7 +1,7 @@
 
 # About $addResource
 
-Command that lets the instructor add the resource link of course materials. Instructor only.
+A command that lets the instructor add the resource link of course materials. Instructor only.
 
 ## Changes
 
@@ -23,7 +23,7 @@ You are in the server that has the Classmate Bot active and online. You go to
 $addResource Testing "https://github.com/txt/se23/blob/main/docs/testing1.md"
 $addResource "License in SE" "https://github.com/txt/se23/blob/main/docs/licenses.md"
 ```
-Successful execution of this command will add two resource in the resource list.
+Successful execution of this command will add two resources to the resource list.
 
 <img src="https://github.com/csc510-team5/ClassMateBot/blob/main/data/media/add-resource.png?raw=true" width="500">
 
