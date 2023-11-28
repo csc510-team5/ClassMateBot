@@ -174,6 +174,17 @@ Instructor can add events to the calendar!
 And students can download the calendar as iCal so they can use in their preffered app!
 <img src="data/proj2media/ical.gif" width="800">
 
+### 11 - Plagiarism Check **(New in Project 3)**
+Students are now able to upload docx and txt assignments to get checked for plagiarism and receive a forecasted grade based on the feedback from the plagiarism check.
+
+### 12 - Office Hour Scheduling **(New in Project 3)**
+Enabling office hour scheduling is helpful for students and instructors. Instructors can add office hours and view those in their calendars.
+
+### 13 - Course Grade Calculation **(New in Project 3)**
+Students can input their grades and get a final estimated grade for the course.
+
+### 14 - Custom Group Settings **(New in Project 3)**
+Extending the group creation feature, students can specify the total number of groups as well as the maximum members per group to ensure students can work in groups with preferred group sizes.
 
 ---
 
