@@ -186,6 +186,9 @@ Students can input their grades and get a final estimated grade for the course.
 ### 14 - Custom Group Settings **(New in Project 3)**
 Extending the group creation feature, students can specify the total number of groups as well as the maximum members per group to ensure students can work in groups with preferred group sizes.
 
+### 15 - Adding, Viewing, and Deleting Resources **(New in Project 3)**
+To enable instructors to provide easily accessible resources that students can utilize, instructors can create and delete resources for students. Students and instructors can view the resources by topic, list all topics, and view all resources provided.
+
 ---
 
 
