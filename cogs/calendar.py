@@ -92,6 +92,20 @@ class Calendar(commands.Cog):
         except HttpError as error:
             print(f"An error occurred: {error}")
 
+    # -----------------------------------------------------------------------------------------------------------------
+    #    Function: add_office_hours(self, ctx, ta_name, event_time, end_year, end_month, end_day)
+    #    Description: adds a recurring office hour event for a specific TA or instructor to the Google Calendar
+    #    specified in .env configuration
+    #    Inputs:
+    #       - ctx: context of the command
+    #       - ta_name: name of TA or instructor to add office hours for
+    #       - event_time: time of event to recur by
+    #       - end_year: year to stop recurring event
+    #       - end_month: month to stop recurring event
+    #       - end_day: day to stop recurring event
+    #    Outputs:
+    #       - Recurring event added to calendar, confirmation that event is added
+    # -----------------------------------------------------------------------------------------------------------------
     @commands.command(name="add_office_hours")
     # pylint: disable=too-many-arguments
     async def add_office_hours(
@@ -116,6 +130,21 @@ class Calendar(commands.Cog):
         except HttpError as error:
             print(f"An error occurred: {error}")
 
+    # -----------------------------------------------------------------------------------------------------------------
+    #    Function: add_lectures(self, ctx, class_name, address, event_time, end_year, end_month, end_day)
+    #    Description: adds a recurring lecture event with a specific address to the Google Calendar specified in .env
+    #    configuration. Assumes lectures will always occur at the same address
+    #    Inputs:
+    #       - ctx: context of the command
+    #       - class_name: name of class to add recurring lectures for
+    #       - address: address of recurring lectures
+    #       - event_time: time of event to recur by
+    #       - end_year: year to stop recurring event
+    #       - end_month: month to stop recurring event
+    #       - end_day: day to stop recurring event
+    #    Outputs:
+    #       - Recurring event added to calendar, confirmation that event is added
+    # -----------------------------------------------------------------------------------------------------------------
     @commands.command(name="add_lectures")
     # pylint: disable=too-many-arguments
     async def add_lectures(
