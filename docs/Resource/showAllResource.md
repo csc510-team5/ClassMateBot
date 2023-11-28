@@ -18,7 +18,7 @@ This function takes as arguments the context in which the command was called and
 # How to run it? (Small Example)
 You are in the server that has the Classmate Bot active and online. You go to
 the channel and enter the command
-$showAllResource(self, ctx):
+$showAllResource
 ```
 $showAllResource 
 ```
