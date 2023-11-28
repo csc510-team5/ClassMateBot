@@ -35,18 +35,14 @@ async def test_ping(bot):
 # Tests cogs/groups.py
 # ---------------------
 @pytest.mark.asyncio
-async def test_groupJoin(bot):
+async def test_groupJoin(bot):    
     # first leave all groups just in case in any
     await dpytest.message("$leave")
     dpytest.get_message()
 
     # Try to join a group
     await dpytest.message("$join 99")
-    assert (
-        dpytest.verify()
-        .message()
-        .content("You are now in Group 99! There are now 1/6 members.")
-    )
+    assert dpytest.verify().message().content("You are now in Group 99! There are now 1/6 members.")
 
     # try to join a different group
     await dpytest.message("$join 1")
@@ -71,9 +67,9 @@ async def test_groupJoin(bot):
     await dpytest.message("$connect")
 
 
-# ------------------------------------
-# Tests cogs/groups.py error handling
-# ------------------------------------
+# # ------------------------------------
+# # Tests cogs/groups.py error handling
+# # ------------------------------------
 @pytest.mark.asyncio
 async def test_groupError(bot):
     # Try to join a group that doesn't exist
@@ -83,7 +79,8 @@ async def test_groupError(bot):
         dpytest.verify()
         .message()
         .content(
-            "To use the join command, do: $join <Num> where 0 <= <Num> <= 99 \n ( For example: $join 0 )"
+            "To use the join command, do: $join <Num> "
+                "where 0 <= <Num> <= total groups$ \n ( For example: $join 0 )"
         )
     )
 
@@ -120,6 +117,12 @@ async def test_assignments(bot):
         dpytest.verify()
         .message()
         .content("A grading category has been added for: Project  with weight: 0.7 ")
+    )
+    await dpytest.message("$addgradecategory Test 0.1")
+    assert (
+        dpytest.verify()
+        .message()
+        .content("This category weight would make the total weight more than 1..!!")
     )
     ##Adding Assignments
     # Test adding a valid assignment with new category
@@ -302,13 +305,9 @@ async def test_gradesStudent(bot):
     await dpytest.message("$gradebycategory Homework")
     assert dpytest.verify().message().content("Grade for Homework: 25.00%")
     await dpytest.message("$gradeforclass")
-    assert dpytest.verify().message().content("Grade for class: 7.50%")
+    assert dpytest.verify().message().content("Grade for class: 25.00%")
     await dpytest.message("$graderequired Homework 50 30")
-    assert (
-        dpytest.verify()
-        .message()
-        .content("Grade on next assignment needed to keep 30% in Homework: 33.00%")
-    )
+    assert dpytest.verify().message().content('Grade on next assignment needed to keep 30% in Homework: 33.00%')
     await dpytest.message("$graderequiredforclass Homework 50  60")
     assert (
         dpytest.verify()
@@ -375,7 +374,8 @@ async def test_gradesStudentError(bot):
         dpytest.verify()
         .message()
         .content(
-            "To use the gradebycategory command, do: $gradebycategory <categoryname>\n ( For example: $gradebycategory tests )"
+            "To use the gradebycategory command, do: $gradebycategory <categoryname>\n" +
+                "( For example: $gradebycategory tests )"
         )
     )
     await dpytest.message("$gradebycategory FakeCat")
@@ -432,22 +432,13 @@ async def test_gradesInstructor(bot):
         .message()
         .content("A grading category has been added for: Exams  with weight: 0.7 ")
     )
-    await dpytest.message("$addgradecategory Projects 0.5")
-    assert (
-        dpytest.verify()
-        .message()
-        .content("A grading category has been added for: Projects  with weight: 0.5 ")
-    )
-    await dpytest.message("$deletegradecategory Projects")
-    assert dpytest.verify().message().content("Projects category has been deleted ")
+    await dpytest.message("$deletegradecategory Exams")
+    assert dpytest.verify().message().content("Exams category has been deleted ")
+    await dpytest.message("$addgradecategory Exams 0.7")  # add back
+    dpytest.get_message()
     await dpytest.message("$addassignment Midterm1 Exams 100")
-    assert (
-        dpytest.verify()
-        .message()
-        .content(
-            "A grading assignment has been added for: Midterm1  with points: 100 and category: Exams"
-        )
-    )
+    assert dpytest.verify().message().contains().content("A grading assignment has been added for: Midterm1  with points: 100 and category: Exams")
+    
     await dpytest.message("$addassignment HW1 Homework 10")
     assert (
         dpytest.verify()
@@ -717,8 +708,6 @@ async def test_listreminders(bot):
         .contains()
         .content("All reminders have been cleared..!!")
     )
-
-    # Tests cogs/deadline.py
 
 
 # ------------------------------

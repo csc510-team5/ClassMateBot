@@ -776,18 +776,17 @@ class Grades(commands.Cog):
         if existing:
             await ctx.author.send("This category has already been added..!!")
             return
-
-        current_weight_sum = float(
-            db.query(
-                """SELECT SUM(category_weight)
+        
+        current_weight_sum = db.query(
+            """SELECT SUM(category_weight)
             FROM grade_categories
             WHERE guild_id = %s""",
-                (ctx.guild.id,),
-            )[0][0]
-        )
-        if current_weight_sum + categoryweight > 1:
+            (ctx.guild.id,),
+        )[0][0]
+        
+        if current_weight_sum is not None and float(current_weight_sum) + categoryweight > 1 :
             await ctx.author.send(
-                "This category weight would make the total weight less than 1..!!"
+                "This category weight would make the total weight more than 1..!!"
             )
             return
 

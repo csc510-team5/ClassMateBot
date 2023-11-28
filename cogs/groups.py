@@ -304,7 +304,7 @@ class Groups(commands.Cog):
         await member.add_roles(role)
 
         await ctx.send(
-            f"You are now in Group {group_num}! There are now {group_count[0][0] + 1}/ {max_members} members."
+            f"You are now in Group {group_num}! There are now {group_count[0][0] + 1}/{max_members} members."
         )
 
     # -------------------------------------------------------------------------------------------------------
