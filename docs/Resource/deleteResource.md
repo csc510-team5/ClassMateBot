@@ -2,7 +2,7 @@
   
 # About $deleteResource
 
-Command that lets the instructor delete a resource link of course materials. Instructor only.
+A command that lets the instructor delete a resource link of course materials. Instructor only.
 
 ## Changes
 
@@ -27,5 +27,5 @@ Successful execution of this command will delete the resource in the resource li
 
 <img src="https://github.com/csc510-team5/ClassMateBot/blob/main/data/media/delete-resource.png?raw=true" width="500">
 
-This can be verified by the command $showAllResource to check if the resource have been deleted. 
+This can be verified by the command $showAllResource to check whether the resource has been deleted. 
 
