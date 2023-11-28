@@ -35,14 +35,18 @@ async def test_ping(bot):
 # Tests cogs/groups.py
 # ---------------------
 @pytest.mark.asyncio
-async def test_groupJoin(bot):    
+async def test_groupJoin(bot):
     # first leave all groups just in case in any
     await dpytest.message("$leave")
     dpytest.get_message()
 
     # Try to join a group
     await dpytest.message("$join 99")
-    assert dpytest.verify().message().content("You are now in Group 99! There are now 1/6 members.")
+    assert (
+        dpytest.verify()
+        .message()
+        .content("You are now in Group 99! There are now 1/6 members.")
+    )
 
     # try to join a different group
     await dpytest.message("$join 1")
@@ -80,7 +84,7 @@ async def test_groupError(bot):
         .message()
         .content(
             "To use the join command, do: $join <Num> "
-                "where 0 <= <Num> <= total groups$ \n ( For example: $join 0 )"
+            "where 0 <= <Num> <= total groups$ \n ( For example: $join 0 )"
         )
     )
 
@@ -307,7 +311,11 @@ async def test_gradesStudent(bot):
     await dpytest.message("$gradeforclass")
     assert dpytest.verify().message().content("Grade for class: 25.00%")
     await dpytest.message("$graderequired Homework 50 30")
-    assert dpytest.verify().message().content('Grade on next assignment needed to keep 30% in Homework: 33.00%')
+    assert (
+        dpytest.verify()
+        .message()
+        .content("Grade on next assignment needed to keep 30% in Homework: 33.00%")
+    )
     await dpytest.message("$graderequiredforclass Homework 50  60")
     assert (
         dpytest.verify()
@@ -374,8 +382,8 @@ async def test_gradesStudentError(bot):
         dpytest.verify()
         .message()
         .content(
-            "To use the gradebycategory command, do: $gradebycategory <categoryname>\n" +
-                "( For example: $gradebycategory tests )"
+            "To use the gradebycategory command, do: $gradebycategory <categoryname>\n"
+            + "( For example: $gradebycategory tests )"
         )
     )
     await dpytest.message("$gradebycategory FakeCat")
@@ -437,8 +445,15 @@ async def test_gradesInstructor(bot):
     await dpytest.message("$addgradecategory Exams 0.7")  # add back
     dpytest.get_message()
     await dpytest.message("$addassignment Midterm1 Exams 100")
-    assert dpytest.verify().message().contains().content("A grading assignment has been added for: Midterm1  with points: 100 and category: Exams")
-    
+    assert (
+        dpytest.verify()
+        .message()
+        .contains()
+        .content(
+            "A grading assignment has been added for: Midterm1  with points: 100 and category: Exams"
+        )
+    )
+
     await dpytest.message("$addassignment HW1 Homework 10")
     assert (
         dpytest.verify()
@@ -2282,6 +2297,7 @@ async def test_calendar(bot):
         .content("User johndoe@gmail.com has been removed from the calendar.")
     )
 
+
 @pytest.mark.asyncio
 async def test_get_resource_by_topic(bot):
     user = dpytest.get_config().members[0]
@@ -2315,14 +2331,8 @@ async def test_get_resource_by_topic(bot):
 
     # Test missing argument topic
     await dpytest.message("$showResourceByTopic -1")
-    assert (
-        dpytest.verify()
-        .message()
-        .contains()
-        .content(
-            "No resources found."
-        )
-    )
+    assert dpytest.verify().message().contains().content("No resources found.")
+
 
 @pytest.mark.asyncio
 async def test_get_calendar_downloads(bot):

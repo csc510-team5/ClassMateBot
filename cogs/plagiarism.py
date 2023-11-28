@@ -8,6 +8,7 @@ from discord.ext import commands
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import db
 
+
 # -----------------------------------------------------------------------------------------------------------------
 #    Function: plagiarism(text: str) -> dict
 #    Description: Uses papersowl API free service to check for plagiarism in a string by providing a percent

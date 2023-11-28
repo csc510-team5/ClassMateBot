@@ -35,21 +35,21 @@ def get_grade_for_class(member_name: str, guild_id: str) -> int:
 
     for category_name, category_weight in categories:
         grades = db.query(
-            '''SELECT grades.grade
+            """SELECT grades.grade
             FROM grades
             INNER JOIN assignments ON grades.assignment_id = assignments.id
             INNER JOIN grade_categories ON assignments.category_id = grade_categories.id
             WHERE grades.guild_id = %s AND grades.member_name = %s AND grade_categories.category_name = %s
-            ORDER BY grades.assignment_id''',
+            ORDER BY grades.assignment_id""",
             (guild_id, member_name, category_name),
         )
 
         points = db.query(
-            '''SELECT assignments.points
+            """SELECT assignments.points
             FROM assignments
             INNER JOIN grade_categories ON assignments.category_id = grade_categories.id
             WHERE assignments.guild_id = %s AND grade_categories.category_name = %s
-            ORDER BY assignments.id''',
+            ORDER BY assignments.id""",
             (guild_id, category_name),
         )
 
@@ -79,7 +79,9 @@ def get_grade_for_class(member_name: str, guild_id: str) -> int:
     if no_grades:  # cannot give a grade because there are no assignments graded
         raise ValueError("No assignments are graded")
 
-    return class_total / weight_total  # correct for grades that are not yet inputted (null)
+    return (
+        class_total / weight_total
+    )  # correct for grades that are not yet inputted (null)
 
 
 class Grades(commands.Cog):
@@ -102,7 +104,9 @@ class Grades(commands.Cog):
         name="add_grade_bound",
         help="add upper bound and lower bound for a letter grade",
     )
-    async def add_grade_bound(self, ctx, letter_grade: str, lower_bound: str, upper_bound: str):
+    async def add_grade_bound(
+        self, ctx, letter_grade: str, lower_bound: str, upper_bound: str
+    ):
         try:
             exists_result = db.query(
                 """SELECT lower_bound, upper_bound
@@ -264,8 +268,8 @@ class Grades(commands.Cog):
         """Error handling of gradebycategory function"""
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(
-                "To use the gradebycategory command, do: $gradebycategory <categoryname>\n" +
-                "( For example: $gradebycategory tests )"
+                "To use the gradebycategory command, do: $gradebycategory <categoryname>\n"
+                + "( For example: $gradebycategory tests )"
             )
             await ctx.message.delete()
         else:
@@ -776,15 +780,18 @@ class Grades(commands.Cog):
         if existing:
             await ctx.author.send("This category has already been added..!!")
             return
-        
+
         current_weight_sum = db.query(
             """SELECT SUM(category_weight)
             FROM grade_categories
             WHERE guild_id = %s""",
             (ctx.guild.id,),
         )[0][0]
-        
-        if current_weight_sum is not None and float(current_weight_sum) + categoryweight > 1 :
+
+        if (
+            current_weight_sum is not None
+            and float(current_weight_sum) + categoryweight > 1
+        ):
             await ctx.author.send(
                 "This category weight would make the total weight more than 1..!!"
             )
