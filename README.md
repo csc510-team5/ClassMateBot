@@ -43,6 +43,11 @@
   
 </p>
 
+### Newest Features Demo
+[![why contribute video](https://img.youtube.com/vi/yLZPi0t0SFM/0.jpg)](https://www.youtube.com/watch?v=yLZPi0t0SFM)
+
+We recently added a Dockerfile to aid in development
+
 ### New Features 2 minute demo
 [![why contribute video](https://img.youtube.com/vi/8CfEfXnoKMs/0.jpg)](https://www.youtube.com/watch?v=8CfEfXnoKMs)
 
