@@ -107,15 +107,20 @@ class Plagiarism(commands.Cog):
     @commands.command(
         name="check_plagiarism", help="check attached txt file for plagiarism"
     )
-    async def check_plagiarism(self, ctx):
-        if len(ctx.message.attachments) != 1:
-            await ctx.send("Must have exactly one attachment")
-            return
+    async def check_plagiarism(self, ctx, test:str='false', test_path:str=''):
+        if test == 'false':
+            if len(ctx.message.attachments) != 1:
+                await ctx.send("Must have exactly one attachment")
+                return
 
-        attachment_url = ctx.message.attachments[0].url
-        response = requests.get(attachment_url, timeout=10)
+            attachment_url = ctx.message.attachments[0].url
+            response = requests.get(attachment_url, timeout=10)
 
-        res = plagiarism(response.text)
+            res = plagiarism(response.text)
+        else:
+            with open(test_path) as f:
+                text = f.read()
+            res = plagiarism(text)
 
         await ctx.author.send(
             f'Word count: {res["words_count"]}\n'
