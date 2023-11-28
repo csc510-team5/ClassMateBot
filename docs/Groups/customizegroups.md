@@ -16,3 +16,4 @@ $customizegroups TOTAL_GROUPS MAXIMUM_MEMBERS
 $customizegroups 10 6
 ```
 Successful execution of this command will return a message indicating the group settings.
+![image](https://github.com/csc510-team5/ClassMateBot/blob/b6f8bdb2c959bf4b284b4ba6494bf2555a48f525/data/media/customizegroups.png)
