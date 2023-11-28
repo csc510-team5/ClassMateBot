@@ -107,8 +107,8 @@ class Plagiarism(commands.Cog):
     @commands.command(
         name="check_plagiarism", help="check attached txt file for plagiarism"
     )
-    async def check_plagiarism(self, ctx, test:str='false', test_path:str=''):
-        if test == 'false':
+    async def check_plagiarism(self, ctx, test: str = "false", test_path: str = ""):
+        if test == "false":
             if len(ctx.message.attachments) != 1:
                 await ctx.send("Must have exactly one attachment")
                 return
