@@ -37,9 +37,9 @@ VALUES
 
 INSERT INTO grades
 VALUES
-    ('1143956280222957578', 'Ethical Software Enginnering', 1, 92),
-    ('1143956280222957578', 'Software Testing', 2, 70),
-    ('1143956280222957578', 'Version Controlling in SE', 4, 90);
+    ('1143956280222957578', 'cornonjacob', 1, 92),
+    ('1143956280222957578', 'cornonjacob', 2, 70),
+    ('1143956280222957578', 'cornonjacob', 4, 90);
 
 INSERT INTO resources
 VALUES
